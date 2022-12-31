@@ -23,14 +23,20 @@ class Login extends Component
         $this->fill(['email' => 'admin@softui.com', 'password' => 'secret']);
     }
 
-    public function login() {
+    public function login(){
         $credentials = $this->validate();
         if(auth()->attempt(['email' => $this->email, 'password' => $this->password], $this->remember_me)) {
             $user = User::where(["email" => $this->email])->first();
             auth()->login($user, $this->remember_me);
-            return redirect()->intended('/dashboard');        
-        }
-        else{
+            if($user->tipo==0){
+                return redirect()->intended('/dashboardAdmin');    
+            }else{
+
+                return redirect()->intended('/dashboard');        
+            }
+               
+            
+        }else{
             return $this->addError('email', trans('auth.failed')); 
         }
     }

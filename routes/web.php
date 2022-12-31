@@ -7,6 +7,9 @@ use App\Http\Livewire\Auth\ResetPassword;
 use App\Http\Livewire\Auth\SignUp;
 use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Dashboard;
+use App\Http\Livewire\Admin\Dashadmin;
+use App\Http\Livewire\UserNew;
+use App\Http\Livewire\UserList;
 use App\Http\Livewire\Billing;
 use App\Http\Livewire\Profile;
 use App\Http\Livewire\Tables;
@@ -35,6 +38,7 @@ Route::get('/', function() {
     return redirect('/login');
 });
 
+    
     Route::get('/sign-up', SignUp::class)->name('sign-up');
     Route::get('/login', Login::class)->name('login');
 
@@ -43,6 +47,10 @@ Route::get('/', function() {
     Route::get('/reset-password/{id}',ResetPassword::class)->name('reset-password')->middleware('signed');
 
     Route::middleware('auth')->group(function () {
+    Route::get('/dashboardAdmin', Dashadmin::class)->name('dashboardAdmin');
+    Route::get('/userList', UserList::class)->name('usersList');
+    Route::get('/userNew', UserNew::class)->name('userNew');
+
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
     Route::get('/billing', Billing::class)->name('billing');
     Route::get('/profile', Profile::class)->name('profile');
